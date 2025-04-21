@@ -41,7 +41,8 @@
               <td>{{ $employee.NPWP }}</td>
               <td>{{ $employee.Address }}</td>
               <td>
-                <a href="/employee/update?id={{ $employee.Id }}" class="btn btn-warning">Edit</a>
+                <a href="/employee/update?id={{ $employee.Id }}" class="btn btn-warning">Ubah</a>
+                <a href="/employee/delete?id={{ $employee.Id }}" class="btn btn-danger">Hapus</a>
               </td>
             </tr>
             {{ end }}

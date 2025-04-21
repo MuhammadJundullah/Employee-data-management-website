@@ -10,12 +10,13 @@ import (
 func NewUpdateEmployeeController( db *sql.DB ) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		if r.Method == "POST" {
+			id := r.URL.Query().Get("id")
 			r.ParseForm()
 
 			name := r.Form["name"][0]
 			npwp := r.Form["npwp"][0]
 			address := r.Form["address"][0]
-			_, err := db.Exec("INSERT INTO employee (name, npwp, address) VALUES(?, ?, ?)", name, npwp, address)
+			_, err := db.Exec("UPDATE employee SET name=?, npwp=?, address=? WHERE id=?", name, npwp, address, id)
 			if err != nil {
 				w.WriteHeader(http.StatusInternalServerError)
 				w.Write([]byte(err.Error()))
@@ -30,9 +31,9 @@ func NewUpdateEmployeeController( db *sql.DB ) func(w http.ResponseWriter, r *ht
 
 			row := db.QueryRow("SELECT name, npwp, address FROM employee WHERE id = ?", id)
 			if row.Err() != nil {
+				w.Write([]byte(row.Err().Error()))
 				w.WriteHeader(http.StatusInternalServerError)
-				w.Write([]byte(err.Error()))
-				return
+				return 
 			}
 
 			var employee Employee
@@ -59,7 +60,10 @@ func NewUpdateEmployeeController( db *sql.DB ) func(w http.ResponseWriter, r *ht
 				return
 			}
 
-			err = tmpl.Execute(w, nil)
+			data := make(map[string]any)
+			data["employee"] = employee
+
+			err = tmpl.Execute(w, data)
 			if err != nil {
 				w.WriteHeader(http.StatusInternalServerError)
 				w.Write([]byte(err.Error()))
