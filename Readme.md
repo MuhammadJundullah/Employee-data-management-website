@@ -20,29 +20,20 @@ To run this project, ensure you have the following installed:
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/your-username/go-crud-employee.git
+    git clone https://github.com/MuhammadJundullah/Employee-data-management-website.git
     cd go-crud-employee
     ```
 
 2. Set up the database:
-    - Create a MySQL database named `employee_db`.
+    - Create a MySQL database named `crud_employee`.
     - Import the provided SQL script to create the necessary tables.
 
-3. Update the database configuration in the `config.go` file:
-    ```go
-    const (
-         DBUser     = "your-username"
-         DBPassword = "your-password"
-         DBName     = "employee_db"
-    )
-    ```
-
-4. Run the application:
+3. Run the application:
     ```bash
     go run main.go
     ```
 
-5. Access the website at `http://localhost:8080`.
+4. Access the website at `http://localhost:8080`.
 
 ## License
 
